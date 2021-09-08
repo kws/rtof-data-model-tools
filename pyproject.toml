@@ -21,6 +21,7 @@ tablib = "^3.0.0"
 tqdm = "^4.62.2"
 SQLAlchemy = "^1.4.23"
 pyhumps = "^3.0.2"
+drawSvg = "^1.8.2"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"
