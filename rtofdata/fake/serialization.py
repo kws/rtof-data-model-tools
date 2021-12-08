@@ -12,7 +12,7 @@ def dataset_to_tablib(dataset, spec: Specification):
         items = [i for i in items.values()]
         data = tablib.Dataset()
         dataset_list.append(data)
-        data.headers = [f.id for f in record.fields]
+        data.headers = [f.id for f in record.fields_by_flow]
         data.title = record_name
         for item in items:
             data.append([item.get(h) for h in data.headers])
@@ -23,11 +23,11 @@ def dataset_to_wide(dataset, spec: Specification):
     columns = []
     for record in spec.records_by_flow:
         record = record.record
-        pks = [f for f in record.fields if f.primary_key]
+        pks = [f for f in record.fields_by_flow if f.primary_key]
         unique_values = None
 
         valid_fields = []
-        for f in record.fields:
+        for f in record.fields_by_flow:
             if f.primary_key and f.foreign_keys:
                 continue
             if f.primary_key and len(pks) > 1:

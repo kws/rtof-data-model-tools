@@ -1,21 +1,17 @@
 #!/usr/bin/env python
 
 import argparse
-import os
+from rtofdata.erd import create_erd
+from rtofdata.excel import write_excel_specification
+from rtofdata.jekyll import write_jekyll_specification
+from rtofdata.specification.parser import SpecificationParser
+from rtofdata.word import write_word_specification
 
 
 def main(data_dir=None):
-    if data_dir:
-        os.environ["DATA_ROOT"] = data_dir
 
-    from rtofdata.erd import create_erd
-    from rtofdata.excel import write_excel_specification
-    from rtofdata.jekyll import write_jekyll_specification
-    from rtofdata.specification.parser import parse_specification, validate_specification
-    from rtofdata.word import write_word_specification
-
-    spec = parse_specification()
-    validate_specification(spec)
+    spec_parser = SpecificationParser(data_dir=data_dir)
+    spec = spec_parser.parse_specification()
 
     create_erd(spec)
     write_word_specification(spec)

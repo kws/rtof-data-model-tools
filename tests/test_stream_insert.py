@@ -3,12 +3,17 @@ import unittest
 import yaml
 
 from rtofdata.eventstream import StreamParser
-from rtofdata.specification.parser import parse_specification
+from tests.conftest import quick_spec
 
+spec = quick_spec({"person": (
+    ("unique_id", "string"),
+    ("year_of_birth", "int"),
+    ("gender", "string"),
+)})
 
 def _yaml_to_stream(input_value):
     stream_data = yaml.safe_load(input_value)
-    parser = StreamParser(parse_specification())
+    parser = StreamParser(spec)
     parser.parse_stream(stream_data)
     return parser.records
 

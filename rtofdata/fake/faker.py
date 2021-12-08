@@ -70,7 +70,7 @@ def generate_record(spec, context, record_name, config, faker, ix):
     record_spec = spec.record_by_id(record_name)
     record = {}
 
-    fields_to_generate = {f.id: f for f in record_spec.fields}
+    fields_to_generate = {f.id: f for f in record_spec.fields_by_flow}
 
     id = []
     next_field = None

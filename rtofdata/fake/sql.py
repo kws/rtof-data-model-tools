@@ -15,7 +15,7 @@ def create_schema(spec: Specification):
     for record in spec.records_by_flow:
         record = record.record
         columns = []
-        for f in record.fields:
+        for f in record.fields_by_flow:
             column_type = f.type.extends if f.type.extends else f.type.id
             if column_type == "string":
                 length = f.validation_get("character_limit", 255)
@@ -78,7 +78,7 @@ def get_orm_mappings(spec, engine):
 
     def my_str(self):
         values = []
-        for field in self._record_.fields:
+        for field in self._record_.fields_by_flow:
             values.append(f"{field.id}={getattr(self, field.id)}")
         return f"{humps.pascalize(self._record_.id)}({', '.join(values)})"
 
@@ -132,7 +132,7 @@ def database_to_wide(engine, spec: Specification):
             else:
                 suffix = ""
 
-            for f in record.fields:
+            for f in record.fields_by_flow:
                 if not f.foreign_keys:
                     header = f"{f.id}{suffix}"
                     entry[header] = getattr(row, f.id)

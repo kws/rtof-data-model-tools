@@ -1,6 +1,6 @@
 from collections import namedtuple
 from dataclasses import dataclass
-from typing import List, Any
+from typing import List, Any, Iterable
 
 import humps
 
@@ -129,14 +129,20 @@ class ValidationRule:
 
 @dataclass
 class Specification:
-    records: List[Record]
-    dimensions: List[DimensionList]
-    flows: List[Workflow]
-    validators: List[ValidationRule]
-    datatypes: List[Datatype]
+    records: Iterable[Record]
+    datatypes: Iterable[Datatype]
+    dimensions: Iterable[DimensionList] = None
+    flows: Iterable[Workflow] = None
+    validators: Iterable[ValidationRule] = None
 
     @property
-    def fields(self):
+    def fields(self) -> FieldRecord:
+        for record in self.records:
+            for field in record.fields:
+                yield FieldRecord(field, record, None)
+
+    @property
+    def fields_by_flow(self) -> FieldRecord:
         for flowrecord in self.records_by_flow:
             for field in flowrecord.record.fields:
                 yield FieldRecord(field, flowrecord.record, flowrecord.flow)

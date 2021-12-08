@@ -53,7 +53,7 @@ class Validator:
 
         for record_spec in self.spec.records:
             for record_pk in self.datasource.get_records_by_type(record_spec.id):
-                for field_spec in record_spec.fields:
+                for field_spec in record_spec.fields_by_flow:
                     for validator_conf in field_spec.validation:
                         try:
                             self.validate(validator_conf, record_spec.id, field_spec.id, record_pk)

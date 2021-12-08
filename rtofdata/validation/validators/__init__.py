@@ -30,7 +30,7 @@ def date_after(context, field_value, field_id):
         return
 
     spec = context.spec
-    fields_by_id = {f.field.id: f for f in spec.fields}
+    fields_by_id = {f.field.id: f for f in spec.fields_by_flow}
     fieldrecord = fields_by_id.get(field_id)
     if not fieldrecord:
         print("VALIDATION MISCONFIGURED: FIELD DOES NOT EXIST", field_id)

@@ -4,13 +4,16 @@ from dataclasses import asdict
 import tablib
 
 from rtofdata.parser import Parser
-from rtofdata.specification.parser import parse_specification
+from tests.conftest import quick_spec
 
 
 class TestParserUtil(unittest.TestCase):
 
     def test_basic_to_eventstream(self):
-        spec = parse_specification()
+        spec = quick_spec({"person": (
+            ("unique_id", "string", True),
+            ("year_of_birth", "int"),
+        )})
         parser = Parser(spec)
 
         dataset = tablib.Dataset(
@@ -35,7 +38,11 @@ class TestParserUtil(unittest.TestCase):
         })
 
     def test_many_to_one_eventstream(self):
-        spec = parse_specification()
+        spec = quick_spec({"person": (
+            ("unique_id", "string", True),
+        ), "another_record": (
+            ("integration_outcome_type", "string"),
+        )})
         parser = Parser(spec)
 
         dataset = tablib.Dataset(
@@ -54,7 +61,10 @@ class TestParserUtil(unittest.TestCase):
 
 
     def test_multi_eventstream(self):
-        spec = parse_specification()
+        spec = quick_spec({"person": (
+            ("unique_id", "string", True),
+            ("year_of_birth", "int"),
+        )})
         parser = Parser(spec)
 
         dataset = tablib.Dataset(
@@ -88,7 +98,11 @@ class TestParserUtil(unittest.TestCase):
         self.assertEqual(event.primary_key.integration_outcome_type, "Last Key")
 
     def test_empty_multi_eventstream(self):
-        spec = parse_specification()
+        spec = quick_spec({"person": (
+            ("unique_id", "string", True),
+            ("integration_outcome_type", "string"),
+            ("integration_social", "string"),
+        )})
         parser = Parser(spec)
 
         dataset = tablib.Dataset(

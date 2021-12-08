@@ -91,7 +91,7 @@ def write_records(spec: Specification):
             f.field.id: {
                 "record": f.record.id,
                 **asdict(f.field, dict_factory=dict_factory),
-            } for f in spec.fields if not f.field.foreign_keys
+            } for f in spec.fields_by_flow if not f.field.foreign_keys
         }
         keys = sorted(records.keys())
         records = {k: records[k] for k in keys}
