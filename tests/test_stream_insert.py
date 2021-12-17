@@ -3,12 +3,12 @@ import unittest
 import yaml
 
 from rtofdata.eventstream import StreamParser
-from rtofdata.specification.parser import parse_specification
+from tests.mock_spec import mock_specification
 
 
 def _yaml_to_stream(input_value):
     stream_data = yaml.safe_load(input_value)
-    parser = StreamParser(parse_specification())
+    parser = StreamParser(mock_specification())
     parser.parse_stream(stream_data)
     return parser.records
 

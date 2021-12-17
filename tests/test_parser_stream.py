@@ -4,13 +4,13 @@ from dataclasses import asdict
 import tablib
 
 from rtofdata.parser import Parser
-from rtofdata.specification.parser import parse_specification
+from tests.mock_spec import mock_specification
 
 
 class TestParserUtil(unittest.TestCase):
 
     def test_basic_to_eventstream(self):
-        spec = parse_specification()
+        spec = mock_specification()
         parser = Parser(spec)
 
         dataset = tablib.Dataset(
@@ -35,7 +35,7 @@ class TestParserUtil(unittest.TestCase):
         })
 
     def test_many_to_one_eventstream(self):
-        spec = parse_specification()
+        spec = mock_specification()
         parser = Parser(spec)
 
         dataset = tablib.Dataset(
@@ -52,9 +52,8 @@ class TestParserUtil(unittest.TestCase):
             spec.record_by_id(event.record).get_key(unique_id="1", integration_outcome_type="Test Key")
         )
 
-
     def test_multi_eventstream(self):
-        spec = parse_specification()
+        spec = mock_specification()
         parser = Parser(spec)
 
         dataset = tablib.Dataset(
@@ -88,7 +87,7 @@ class TestParserUtil(unittest.TestCase):
         self.assertEqual(event.primary_key.integration_outcome_type, "Last Key")
 
     def test_empty_multi_eventstream(self):
-        spec = parse_specification()
+        spec = mock_specification()
         parser = Parser(spec)
 
         dataset = tablib.Dataset(

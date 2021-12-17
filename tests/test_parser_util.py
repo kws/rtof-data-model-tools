@@ -1,7 +1,8 @@
 import unittest
 from pathlib import Path
 from rtofdata.parser import pick_value, fix_field_id, file_to_databook, Parser
-from rtofdata.specification.parser import parse_specification
+from tests.mock_spec import mock_specification
+
 
 class _MyClass:
 
@@ -78,7 +79,7 @@ class TestParserUtil(unittest.TestCase):
         self._check_sheet(db)
 
     def test_field_by_id(self):
-        spec = parse_specification()
+        spec = mock_specification()
         parser = Parser(spec)
 
         self.assertFieldResult(parser.get_by_field_id('unique_id'), 'unique_id', 'person')

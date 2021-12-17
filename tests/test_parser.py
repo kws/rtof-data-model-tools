@@ -1,11 +1,11 @@
 import tablib
 
 from rtofdata.parser import Parser
-from rtofdata.specification.parser import parse_specification
+from tests.mock_spec import mock_specification
 
 
 def test_null_headers():
-    spec = parse_specification()
+    spec = mock_specification()
 
     parser = Parser(spec)
 
